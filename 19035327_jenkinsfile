@@ -1,17 +1,17 @@
 pipeline {
       agent any
       stages {
-          stage('One') {
+          stage('19035327 Stage One') {
           steps {
-            echo 'Begin of Pipeline: Stage one completes'
+            echo '19035327 Start of Pipeline'
           }
           }
-          stage('Two') {
+          stage('19035327 Stage Two') {
           steps {
-            input('Do you want to update to Development container?')
+            input('Push changes to Production?')
           }
           }
-          stage('Three') {
+          stage('19035327 Stage Three') {
           when {
                 not {
                     branch "Development NOT updated"
@@ -24,16 +24,19 @@ pipeline {
                  docker cp $locate_script $targets://$locate_script;
                  bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                  '''
-                 echo "Development container updated"
+                 echo "Stage 3 completed -19035327"
           }
           }
-          stage('Four') {
+          stage('19035327 Stage Four') {
           steps {
-            input('Do you want to update to Production container: Proceed to Production')
+            echo 'Production website tested working'
+          }
+          }
+          stage('19035327 Stage Five') {
+          steps {
+            echo 'Production website is updated successfully'
+          }
                 
-          }
-          }
-          stage('Five') {
           when {
                 not {
                     branch "Production NOT updated"
@@ -47,11 +50,6 @@ pipeline {
                  bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                  '''
                  echo "Production container updated"
-          }
-          }
-          stage('Completed updating Operation') {
-          steps {
-            echo 'Completed updating to Production Container'
           }
           }
       }
