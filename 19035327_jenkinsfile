@@ -19,8 +19,8 @@ pipeline {
           }
           steps {
                  sh '''#!/bin/bash
-                 targets=puppetclient1;
-                 locate_script='/testdir/work/devops_repo/script_to_run';
+                 targets='websvr_19035327';
+                 locate_script='/testdir/work/operate_repo/19035327_script';
                  docker cp $locate_script $targets://$locate_script;
                  bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                  '''
@@ -35,22 +35,6 @@ pipeline {
           stage('19035327 Stage Five') {
           steps {
             echo 'Production website is updated successfully'
-          }
-                
-          when {
-                not {
-                    branch "Production NOT updated"
-                }
-          }
-          steps {
-                 sh '''#!/bin/bash
-                 targets=puppetclient2;
-                 locate_script='/testdir/work/devops_repo/script_to_run';
-                 docker cp $locate_script $targets://$locate_script;
-                 bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
-                 '''
-                 echo "Production container updated"
-          }
           }
       }
 }
